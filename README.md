@@ -19,7 +19,8 @@ airBnB_price_predict_final_project/
 │   ├── listings.csv
 │   ├── cleaned_listings.csv
 │   ├── cleaned_listings_final.csv
-│   └── model_ready_listings.csv
+│   ├── model_ready_listings.csv
+│   └── model_ready_listings_final.csv
 ├── notebook-analysis/
 │   └── AirBnB_Price_Prediction_Project.ipynb
 ├── README.md
@@ -125,11 +126,77 @@ airBnB_price_predict_final_project/
 - **Data quality status report** confirming readiness for feature selection
 - **Next steps preparation** with specific guidance for Step 3
 
-### Step 3: Feature Selection 🔍
+### Step 3: Feature Selection ✅
 
-- [ ] Split features and target
-- [ ] Apply feature selection techniques
-- [ ] Document feature importance
+- [x] Split features and target
+- [x] Apply feature selection techniques
+- [x] Document feature importance
+- [x] Final data leakage and correlation cleanup
+
+**Key Feature Selection Analysis Completed:**
+
+**3.1 Data Preparation:**
+
+- **Features and target split** using `log_price` as the target variable for modeling
+- **Train/test split** (80/20) with 17,466 training and 4,367 test samples
+- **Scaling preparation** with StandardScaler for linear models vs unscaled for tree-based models
+- **Feature inventory** documenting all available features for selection analysis
+
+**3.2 Statistical Feature Selection (F-Regression):**
+
+- **F-scores and p-values** calculated for all features to assess linear relationships
+- **Statistical significance testing** identifying features with p < 0.05
+- **Top 10 features visualization** with horizontal bar chart showing F-scores
+- **Linear relationship strength** assessment between each feature and log_price target
+
+**3.3 Lasso Regression Feature Selection:**
+
+- **Multiple alpha values tested** (0.001 to 10.0) for optimal regularization strength
+- **Automatic feature selection** through L1 regularization driving coefficients to zero
+- **Performance vs regularization analysis** with train/test R² comparison
+- **Coefficient visualization** showing feature importance magnitude and direction (positive/negative)
+- **Non-zero coefficient identification** as the final Lasso-selected feature set
+
+**3.4 Random Forest Feature Importance:**
+
+- **Tree-based feature importance** using impurity reduction across 100 trees
+- **Model performance evaluation** achieving strong R² scores on train/test sets
+- **Cumulative importance analysis** identifying features contributing to 95% of total importance
+- **Top 15 features visualization** with importance scores and cumulative importance curves
+
+**3.5 Recursive Feature Elimination (RFE):**
+
+- **Multiple feature counts tested** (5, 10, 15, 20) to find optimal number of features
+- **Ridge regression as base estimator** for systematic feature ranking and elimination
+- **Performance vs feature count analysis** identifying the sweet spot for feature selection
+- **Optimal feature selection** based on highest test R² with reasonable feature count
+
+**3.6 Comprehensive Comparison & Consensus Selection:**
+
+- **Multi-method consensus voting** system comparing all 4 feature selection approaches
+- **Feature consensus categories** defined:
+  - High consensus: 3+ methods (most reliable)
+  - Medium consensus: 2+ methods (good reliability)
+  - Any consensus: 1+ methods (exploratory)
+- **Visual comparison dashboard** with 4-panel analysis:
+  - Method feature counts comparison
+  - Consensus vote distribution
+  - Top consensus features ranking
+  - Method performance comparison
+- **Final feature recommendation** using high consensus features for optimal balance of performance and simplicity
+- **Consensus-based feature set** selected for Step 4 model training
+
+**3.7 Final Data Leakage and Correlation Cleanup:**
+
+- **Critical data leakage removal** of features that could artificially inflate model performance:
+  - `price_per_accommodate`: Derived directly from target variable (price / accommodates)
+  - `estimated_revenue_l365d`: Revenue calculated from price, creating direct leakage
+- **High correlation cleanup** removing redundant features:
+  - `calculated_host_listings_count`: High correlation (r=0.902) with `host_listings_count`
+- **Final feature set validation** ensuring no remaining data leakage using keyword detection
+- **Cleaned consensus features** resulting in approximately 10 robust, leak-free features
+- **Final dataset export** as `model_ready_listings_final.csv` ready for model training
+- **Data integrity verification** confirming realistic model performance expectations
 
 ### Step 4: Model Selection & Training 🤖
 
@@ -185,3 +252,17 @@ airBnB_price_predict_final_project/
   - Identified features requiring scaling for linear models vs tree-based models
   - Created final optimized dataset saved as `model_ready_listings.csv`
   - Dataset now optimally prepared for feature selection and model training
+- [2024-03-19] Completed Step 3: Feature Selection
+  - Implemented 4 comprehensive feature selection techniques: F-Regression, Lasso, Random Forest, and RFE
+  - Applied consensus voting system across all methods to identify most reliable features
+  - Created high/medium/any consensus feature sets based on method agreement
+  - Generated extensive visualizations comparing method performance and feature importance
+  - Selected final high-consensus feature set for optimal balance of performance and simplicity
+  - Prepared optimized feature set ready for model training and evaluation
+- [2024-03-19] Completed Step 3: Final Data Leakage and Correlation Cleanup
+  - Removed critical data leakage features: price_per_accommodate and estimated_revenue_l365d
+  - Eliminated high correlation redundancy: calculated_host_listings_count (r=0.902 with host_listings_count)
+  - Validated final feature set for data integrity and realistic model performance
+  - Finalized approximately 10 robust, leak-free features for model training
+  - Saved final cleaned dataset as `model_ready_listings_final.csv`
+  - Confirmed dataset ready for Step 4 with confidence in data quality and model validity

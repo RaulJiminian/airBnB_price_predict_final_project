@@ -1,8 +1,9 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import joblib
+import pandas as pd
 import numpy as np
 import logging
+import joblib
 import os
 
 # ========================
@@ -57,12 +58,11 @@ def predict():
       }), 400
 
     # Construct input in correct order
-    input_values = [data[feature] for feature in features]
-    input_array = np.array(input_values).reshape(1, -1)
-    logging.debug(f"Input reshaped for prediction: {input_array}")
+    input_df = pd.DataFrame([data], columns=features)
+    logging.debug(f"Input DataFrame for prediction:\n{input_df}")
 
     # Make prediction
-    predicted_log_price = model.predict(input_array)[0]
+    predicted_log_price = model.predict(input_df)[0]
     predicted_price = float(np.exp(predicted_log_price) - 1)
     logging.info(f"Prediction (log): {predicted_log_price}, Converted: ${predicted_price:.2f}")
 

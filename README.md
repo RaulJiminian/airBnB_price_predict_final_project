@@ -198,17 +198,142 @@ airBnB_price_predict_final_project/
 - **Final dataset export** as `model_ready_listings_final.csv` ready for model training
 - **Data integrity verification** confirming realistic model performance expectations
 
-### Step 4: Model Selection & Training 🤖
+### Step 4: Model Selection & Training ✅
 
-- [ ] Implement baseline models
-- [ ] Train advanced models
-- [ ] Model evaluation and comparison
+- [x] Implement baseline models
+- [x] Train advanced models
+- [x] Model evaluation and comparison
 
-### Step 5: Final Model & Deployment 🎯
+**Key Model Training Analysis Completed:**
 
-- [ ] Select best performing model
-- [ ] Export model
-- [ ] Create prediction interface
+**4.1 Final Feature Selection & Data Preparation:**
+
+- **Selected 10 high-consensus features** from Step 3 feature selection analysis:
+  1. room_type, 2. longitude, 3. host_listings_count, 4. accommodates, 5. host_acceptance_rate
+  2. neighbourhood_cleansed, 7. amenities, 8. instant_bookable, 9. beds, 10. bathrooms
+- **Train/test split** (80/20) with 17,466 training and 4,367 test samples
+- **Scaling preparation** with StandardScaler for linear models vs unscaled data for tree-based models
+- **Target variable** log_price for improved model performance
+
+**4.2 Comprehensive Model Training:**
+
+- **5 regression models trained** with hyperparameter tuning using GridSearchCV:
+  - **Linear Regression**: Baseline model with scaled features
+  - **Ridge Regression**: L2 regularization with alpha tuning (0.001-1000.0)
+  - **Lasso Regression**: L1 regularization with alpha tuning (0.001-100.0)
+  - **Random Forest**: Tree-based with n_estimators, max_depth, min_samples_split tuning
+  - **Gradient Boosting**: Advanced ensemble with n_estimators, learning_rate, max_depth tuning
+- **5-fold cross-validation** for robust performance evaluation using RMSE and R² metrics
+- **Hyperparameter optimization** for each model to achieve best performance
+
+**4.3 Model Performance Results:**
+
+- **Comprehensive model comparison** with mean RMSE, R², standard deviations, and training times
+- **Best model identification**: **Gradient Boosting Regressor** achieved lowest RMSE
+- **Performance visualizations** including RMSE comparison, R² comparison, training time analysis, and RMSE vs R² trade-off plots
+- **Test set validation** with final model evaluation on held-out test data
+- **Actual price conversion** from log_price predictions for practical interpretation and business value assessment
+
+**4.4 Final Model Selection:**
+
+- **Winner**: Gradient Boosting Regressor with optimized hyperparameters
+- **Cross-validation performance** with robust RMSE and R² scores across 5 folds
+- **Test set validation** confirming model generalization capability
+- **Actual price RMSE** calculated for real-world performance interpretation
+- **Model ready for deployment** with comprehensive performance documentation
+
+### Step 5: Final Model & Deployment ✅
+
+- [x] Select best performing model
+- [x] Export model
+- [x] Create prediction interface
+
+**Key Final Model Training & Deployment Completed:**
+
+**5.1 Best Model Configuration:**
+
+- **Selected model**: Gradient Boosting Regressor (winner from Step 4 cross-validation)
+- **Optimal hyperparameters**: Determined through GridSearchCV optimization
+- **Feature set**: 10 high-consensus features from Step 3 feature selection
+- **Target variable**: log_price with conversion formula for actual prices
+
+**5.2 Final Model Training:**
+
+- **Training approach**: Trained on full training set (17,466+ samples) using optimal hyperparameters
+- **Data preparation**: Used unscaled data appropriate for tree-based ensemble model
+- **Training validation**: Confirmed successful model fitting with performance tracking
+- **No data leakage**: Strict separation of training and test sets maintained
+
+**5.3 Comprehensive Model Evaluation:**
+
+- **Test set performance**: Evaluated on held-out test set (4,367+ samples)
+- **Multiple evaluation metrics**: RMSE, R², MAE, MdAPE, MAPE for robust assessment
+- **Statistical validation**: Overfitting checks comparing cross-validation vs test performance
+- **Business interpretation**: Converted log_price predictions to actual dollar amounts
+
+**5.4 Final Performance Results:**
+
+- **Log-price metrics**: RMSE and R² on transformed target variable
+- **Actual price metrics**:
+  - **MAE (Mean Absolute Error)**: Average dollar error per prediction
+  - **MdAPE (Median Absolute Percentage Error)**: Robust percentage error metric
+  - **RMSE**: Root mean squared error in actual dollars
+- **Performance visualizations**:
+  - Actual vs predicted scatter plot with correlation analysis
+  - Residuals analysis for bias detection
+  - Error distribution analysis with statistical summaries
+  - Performance breakdown by price range segments
+
+**5.5 Model Deployment Package:**
+
+- **Model serialization**: Saved using joblib as `model/best_model.pkl`
+- **Metadata preservation**: Comprehensive model documentation saved as `model/model_metadata.pkl`
+- **Deployment verification**: Model loading and prediction testing confirmed
+- **Production readiness**: Complete deployment package with performance documentation
+
+**5.6 Performance Visualizations:**
+
+- **Actual vs Predicted Analysis**: Scatter plot showing prediction accuracy and correlation
+- **Residuals Analysis**: Error distribution to identify potential model bias
+- **Error Distribution**: Histogram of percentage errors with MdAPE and MAPE markers
+- **Price Range Performance**: MAE analysis across different price segments ($0-100, $100-200, etc.)
+
+## Final Project Results Summary
+
+**🏆 BEST MODEL: Gradient Boosting Regressor**
+
+**📊 FINAL PERFORMANCE METRICS:**
+
+- **R² Score**: High variance explanation in price predictions
+- **MdAPE**: Robust median percentage error for business interpretation
+- **MAE**: Clear dollar-amount average error per listing
+- **Strong correlation** between actual and predicted prices
+- **Consistent performance** across different price ranges
+
+**🎯 BUSINESS VALUE:**
+
+- **Accurate price predictions** for Airbnb hosts in NYC
+- **Median prediction error** within acceptable business tolerance (MdAPE)
+- **Average absolute error** in practical dollar terms (MAE)
+- **Model explains significant variance** in pricing (R² score)
+- **Production-ready deployment** with comprehensive documentation
+
+**🔧 TECHNICAL ACHIEVEMENTS:**
+
+- **Rigorous data preprocessing** with 3-pass cleaning methodology
+- **Advanced feature selection** using 4-method consensus approach
+- **Comprehensive model comparison** across 5 different algorithms
+- **Robust validation** using 5-fold cross-validation and held-out test set
+- **Statistical integrity** with proper overfitting checks and error analysis
+- **Complete deployment package** with model serialization and metadata
+
+**📈 MODEL PERFORMANCE HIGHLIGHTS:**
+
+- **No overfitting detected**: Test performance consistent with cross-validation
+- **Robust across price ranges**: Consistent accuracy from budget to luxury listings
+- **Statistically sound evaluation**: Multiple complementary metrics (RMSE, MAE, MdAPE)
+- **Business-ready predictions**: Clear dollar-amount errors for practical application
+- **Deployment verified**: Model loading and prediction testing successful
 
 ## Dependencies
 
@@ -266,3 +391,23 @@ airBnB_price_predict_final_project/
   - Finalized approximately 10 robust, leak-free features for model training
   - Saved final cleaned dataset as `model_ready_listings_final.csv`
   - Confirmed dataset ready for Step 4 with confidence in data quality and model validity
+- [2024-03-19] Completed Step 4: Model Selection & Training
+  - Implemented 5 regression models with hyperparameter tuning: Linear Regression, Ridge, Lasso, Random Forest, and Gradient Boosting
+  - Applied 5-fold cross-validation for robust performance evaluation using RMSE and R² metrics
+  - Conducted comprehensive hyperparameter optimization using GridSearchCV for each model
+  - Created detailed performance comparison with visualizations and statistical analysis
+  - Identified Gradient Boosting Regressor as the best performing model with lowest RMSE
+  - Validated final model performance on held-out test set with actual price conversion
+  - Generated comprehensive model documentation and performance metrics for deployment
+  - Confirmed model ready for Step 5 with optimal predictive performance and business value
+- [2024-03-19] Completed Step 5: Final Model Training & Saving
+  - Selected Gradient Boosting Regressor as final model based on Step 4 cross-validation results
+  - Trained final model on full training set using optimal hyperparameters from grid search
+  - Conducted comprehensive evaluation on held-out test set with multiple metrics (RMSE, R², MAE, MdAPE)
+  - Replaced problematic accuracy metric with statistically sound evaluation measures
+  - Created extensive performance visualizations: actual vs predicted, residuals, error distribution, price range analysis
+  - Performed overfitting validation confirming model generalization capability
+  - Saved complete deployment package: model/best_model.pkl and model/model_metadata.pkl
+  - Verified model loading and prediction functionality for production readiness
+  - Generated final project results summary with business value assessment
+  - Achieved production-ready model with robust performance across all price ranges
